@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard de Vendas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .stat-box:hover { background-color: #f3f4f6; cursor: pointer; }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-6xl">
+    <div class="bg-white rounded-2xl shadow p-4 stat-box" onclick="editStat(this)">
+      <div class="text-sm text-gray-500">Total de Vendas</div>
+      <div class="text-xl font-bold stat-value">15400.50</div>
+    </div>
+    <div class="bg-white rounded-2xl shadow p-4 stat-box" onclick="editStat(this)">
+      <div class="text-sm text-gray-500">Total de Pedidos</div>
+      <div class="text-xl font-bold stat-value">125</div>
+    </div>
+    <div class="bg-white rounded-2xl shadow p-4 stat-box" onclick="editStat(this)">
+      <div class="text-sm text-gray-500">Receita do Mês</div>
+      <div class="text-xl font-bold stat-value">9200.00</div>
+    </div>
+    <div class="bg-white rounded-2xl shadow p-4 stat-box" onclick="editStat(this)">
+      <div class="text-sm text-gray-500">Tíquete Médio</div>
+      <div class="text-xl font-bold stat-value">73.60</div>
+    </div>
+  </div>
+  <script>
+    function editStat(card) {
+      const valueElement = card.querySelector('.stat-value');
+      const oldValue = valueElement.textContent.trim();
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.value = parseFloat(oldValue);
+      input.className = 'text-xl font-bold mt-1 w-full outline-none';
+      input.onblur = () => {
+        valueElement.textContent = parseFloat(input.value).toFixed(2);
+        card.replaceChild(valueElement, input);
+      };
+      input.onkeydown = (e) => {
+        if (e.key === 'Enter') input.blur();
+      };
+      card.replaceChild(input, valueElement);
+      input.focus();
+    }
+  </script>
+</body>
+</html>
